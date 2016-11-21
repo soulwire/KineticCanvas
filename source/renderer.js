@@ -67,13 +67,16 @@ class Renderer {
   }
   drawCurve(points, thickness) {
     if (points.length >= 3) {
-      var p0, p1, p2, p3, i6 = 1.0 / 6.0, ox = points[0].x, oy = points[0].y;
-      for ( var i = 3, n = points.length; i < n; i++ ) {
+      let p0, p1, p2, p3, t,
+        ox = points[0].x, oy = points[0].y,
+        i6 = 1.0 / 6.0,
+        ct = Number.MAX_VALUE;
+      this.context.beginPath();
+      for (let i = 3, n = points.length; i < n; i++) {
         p0 = points[i - 3];
         p1 = points[i - 2];
         p2 = points[i - 1];
         p3 = points[i];
-        this.context.beginPath();
         this.context.moveTo(ox, oy);
         this.context.bezierCurveTo(
           p2.x * i6 + p1.x - p0.x * i6,
@@ -83,9 +86,14 @@ class Renderer {
           ox = p2.x,
           oy = p2.y
         );
-        this.context.lineWidth = (points[i].t || 1) * thickness;
-        this.context.stroke();
+        t = (points[i].t || 1) * thickness;
+        if (Math.abs(ct - t) > 1.5) {
+          this.context.lineWidth = t;
+          this.context.stroke();
+          this.context.beginPath();
+        }
       }
+      this.context.stroke();
     }
   }
   onResize() {
@@ -99,7 +107,7 @@ class Renderer {
     this.canvas.height = this.height * this.scale;
     this.context.scale(this.scale, this.scale);
     this.context.globalCompositeOperation = 'darken';
-    this.context.lineJoin = 'round';
+    // this.context.lineJoin = 'round';
     this.context.lineCap = 'round';
   }
 }

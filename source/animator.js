@@ -43,7 +43,6 @@ class Animator {
             point.active = false;
           }
         } else {
-          // TODO prune paths.
           path.reset();
         }
       }
@@ -100,7 +99,7 @@ class Animator {
           o.x += o.vx * o.speed;
           o.y += o.vy * o.speed;
           o.age++;
-          // TODO can't remember what this is about
+          // Slightly special case for the last node.
           if (i == n - 1) {
             p.vx += dx * -f * p.force;
             p.vy += dy * -f * p.force;
