@@ -7,7 +7,9 @@
     "clean": "rm -rf deploy",
     "build": "npm run clean && webpack -p --env production",
     "start": "webpack-dev-server --hot --inline --port 3000",
-    "deploy": "npm run build && git subtree push --prefix deploy/ origin gh-pages"
+    "commit_deploy": "git add deploy -A && git commit -m \"deploy files at `date`\" -n > /dev/null 2>&1; exit 0",
+    "ghpages": "git subtree split --prefix deploy/ -b gh-pages && git push -f origin gh-pages:gh-pages && git branch -D gh-pages",
+    "deploy": "npm run build && npm run commit_deploy && npm run ghpages"
   },
   "author": "Justin Windle <justin@soulwire.co.uk>",
   "license": "ISC",
