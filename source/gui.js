@@ -73,7 +73,6 @@ style.innerHTML = `
     margin-left: 8px;
     fill: #1c1c1c;
   }
-}
 `;
 document.body.appendChild(style);
 
