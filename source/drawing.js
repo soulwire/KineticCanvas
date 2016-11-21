@@ -20,6 +20,7 @@ class Drawing {
     this.onPointerUp = this.onPointerUp.bind(this);
     this.currentPath = null;
     this.lastPoint = null;
+    this.deferred = [];
     document.addEventListener('touchstart', this.onPointerDown, false);
     document.addEventListener('mousedown', this.onPointerDown, false);
   }
@@ -36,8 +37,10 @@ class Drawing {
           cy + points[i + 1]
         ));
       }
-      this.paths.push(path);
-      path.animate();
+      this.deferred.push(setTimeout(() => {
+        this.paths.push(path);
+        path.animate();
+      }, 400 + index * 300));
     });
   }
   reset() {
@@ -46,6 +49,7 @@ class Drawing {
   }
   onPointerDown(event) {
     if (this.hasFixtures) {
+      this.deferred.forEach(clearTimeout);
       this.hasFixtures = false;
       this.reset();
     }
