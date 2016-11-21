@@ -128,7 +128,7 @@ class Animator {
             p.age++;
           }
           // Spawn a new particle at point.
-          if (path.particles.length < 100 && Random.bool(0.1)) {
+          if (path.particles.length < 100 && Random.bool(0.05)) {
             path.spawn(o);
           }
           // perpendicular unit vector
@@ -146,8 +146,8 @@ class Animator {
       p.t *= 0.95;
       p.vx += Random.float(-0.3, 0.3);
       p.vy += Random.float(-0.3, 0.3);
-      p.vx *= 0.9;
-      p.vy *= 0.9;
+      p.vx *= 0.95;
+      p.vy *= 0.95;
       p.x += p.vx;
       p.y += p.vy;
       if (p.t < 0.1) {

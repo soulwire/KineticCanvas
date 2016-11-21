@@ -7,6 +7,12 @@ import Random from './random';
 import Point from './point';
 
 // ——————————————————————————————————————————————————
+// Helpers
+// ——————————————————————————————————————————————————
+
+const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+
+// ——————————————————————————————————————————————————
 // Path
 // ——————————————————————————————————————————————————
 
@@ -35,9 +41,9 @@ class Path {
   }
   spawn(point) {
     const { x, y, t } = point;
-    const particle = new Particle(x, y, t);
-    particle.vx = point.vx * Random.float(0.1, 1.0);
-    particle.vy = point.vy * Random.float(0.1, 1.0);
+    const particle = new Particle(x, y, t * Random.float(0.4, 1.0));
+    particle.vx = clamp(point.vx * Random.float(0.2, 1.5), -5, 5);
+    particle.vy = clamp(point.vy * Random.float(0.2, 1.5), -5, 5);
     this.particles.push(particle);
   }
   reset() {
