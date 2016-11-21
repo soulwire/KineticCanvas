@@ -2,14 +2,8 @@
 // Random
 // ——————————————————————————————————————————————————
 
-const mask = 0x7FFFFFFF;
 
-const Random = () =>
-  (Random.seed = (Random.seed * 16807) % mask) / mask + 2.33e-10;
-
-Random.seed = 1;
-
-Random.mutate = () => Random.seed = Math.random() * mask;
+const Random = Math.random;
 
 Random.float = (min, max) => {
   if (max == null) max = min, min = 0;
@@ -25,8 +19,6 @@ Random.bool = (chance = 0.5) => Random() < chance;
 Random.bit = (chance = 0.5) => Random() < chance ? 0 : 1;
 
 Random.item = (list) => list[~~((Random()) * list.length)];
-
-Random.mutate();
 
 // ——————————————————————————————————————————————————
 // Exports
